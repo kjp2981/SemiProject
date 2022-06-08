@@ -6,6 +6,7 @@ using static Define;
 [RequireComponent(typeof(CharacterController))]
 public class PlayerController : MonoBehaviour
 {
+    private Animator animator;
     private CharacterController cc;
     private CollisionFlags cf = CollisionFlags.None;
 
@@ -14,9 +15,14 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     private float jumpPowr = 5f;
     private float yVelocity;
+
+    private readonly int hashH = Animator.StringToHash("h");
+    private readonly int hashV = Animator.StringToHash("v");
+    private readonly int hashJump = Animator.StringToHash("jump");
     void Start()
     {
         cc = GetComponent<CharacterController>();
+        animator = GetComponent<Animator>();
     }
 
     void Update()
@@ -29,11 +35,14 @@ public class PlayerController : MonoBehaviour
         yVelocity += -9.81f * Time.deltaTime;
         if (Input.GetButtonDown("Jump") && (cf & CollisionFlags.Below) != 0)
         {
+            animator.SetTrigger(hashJump);
             yVelocity = jumpPowr;
         }
 
         float h = Input.GetAxis("Horizontal");
         float v = Input.GetAxis("Vertical");
+        animator.SetFloat(hashH, h);
+        animator.SetFloat(hashV, v);
 
         Vector3 dir = Vector3.right * h + Vector3.forward * v;
         dir = MainCam.transform.TransformDirection(dir);
