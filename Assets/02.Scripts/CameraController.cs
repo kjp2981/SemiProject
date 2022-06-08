@@ -23,7 +23,7 @@ public class CameraController : MonoBehaviour
     public Transform firstCameraPos;
     #endregion
 
-    void Update()
+    void LateUpdate()
     {
         switch (type)
         {

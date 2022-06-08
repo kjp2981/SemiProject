@@ -11,6 +11,9 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField]
     private float moveSpeed = 10f;
+    [SerializeField]
+    private float jumpPowr = 5f;
+    private float yVelocity;
     void Start()
     {
         cc = GetComponent<CharacterController>();
@@ -23,13 +26,19 @@ public class PlayerController : MonoBehaviour
 
     void Move()
     {
+        yVelocity += -9.81f * Time.deltaTime;
+        if (Input.GetButtonDown("Jump") && (cf & CollisionFlags.Below) != 0)
+        {
+            yVelocity = jumpPowr;
+        }
+
         float h = Input.GetAxis("Horizontal");
         float v = Input.GetAxis("Vertical");
 
         Vector3 dir = Vector3.right * h + Vector3.forward * v;
         dir = MainCam.transform.TransformDirection(dir);
-        dir += Physics.gravity;
         dir.Normalize();
+        dir.y = yVelocity;
 
         if(dir != Vector3.zero)
         {
