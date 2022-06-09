@@ -5,12 +5,14 @@ using UnityEngine;
 public class Bullet : PoolableMono
 {
     [SerializeField]
-    private float speed = 10f;
-    [SerializeField]
-    private float life = 5f;
+    private BulletInfoSO bulletSO;
 
-    RaycastHit hit;
-    public LayerMask hitLayerMask;
+    private TrailRenderer trailRenderer;
+
+    private void Awake()
+    {
+        trailRenderer = GetComponent<TrailRenderer>();
+    }
 
     private void OnEnable()
     {
@@ -19,26 +21,37 @@ public class Bullet : PoolableMono
 
     private void Update()
     {
-        transform.Translate(Vector3.forward * speed * Time.deltaTime);
-
-        Physics.Raycast(transform.position, transform.forward, out hit, .2f, hitLayerMask);
-        Debug.DrawRay(transform.position, transform.forward * .2f, Color.green);
+        transform.Translate(Vector3.forward * bulletSO.speed * Time.deltaTime);
     }
 
     private IEnumerator DestroyBulletCoroutine()
     {
-        yield return new WaitForSeconds(life);
+        yield return new WaitForSeconds(bulletSO.life);
         PoolManager.Instance.Push(this);
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void OnCollisionEnter(Collision collider)
     {
         // 타격 이펙트 생성
+        if(collider.gameObject.layer == LayerMask.NameToLayer("ENEMY"))
+        {
+            BloodImpact impact = PoolManager.Instance.Pop(bulletSO.enemyImpact.name) as BloodImpact;
+            Quaternion rot = Quaternion.LookRotation(collider.GetContact(0).normal);
+            impact.transform.SetPositionAndRotation(collider.GetContact(0).point, rot);
+
+            collider.gameObject.GetComponent<Monster>().Damage(1);
+        }
+        if(collider.gameObject.layer == LayerMask.NameToLayer("OBSTACLE"))
+        {
+            ObstacleImpact impact = PoolManager.Instance.Pop(bulletSO.obstacleImpact.name) as ObstacleImpact;
+            Quaternion rot = Quaternion.LookRotation(-collider.GetContact(0).normal);
+            impact.transform.SetPositionAndRotation(collider.GetContact(0).point, rot);
+        }
         PoolManager.Instance.Push(this);
     }
 
     public override void Reset()
     {
-        
+        trailRenderer.Clear();
     }
 }

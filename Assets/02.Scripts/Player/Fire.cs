@@ -63,6 +63,9 @@ public class Fire : MonoBehaviour
             {
                 Bullet bullet = PoolManager.Instance.Pop("Bullet") as Bullet;
                 bullet.transform.SetPositionAndRotation(firePos.position, firePos.rotation);
+
+                MuzzleImpact muzzle = PoolManager.Instance.Pop("MuzzleFlash") as MuzzleImpact;
+                muzzle.transform.SetPositionAndRotation(firePos.position, firePos.rotation);
                 timer = 0f;
             }
         }

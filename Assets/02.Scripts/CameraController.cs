@@ -23,6 +23,13 @@ public class CameraController : MonoBehaviour
     public Transform firstCameraPos;
     #endregion
 
+    private IEnumerator Start()
+    {
+        rotSpeed = 0;
+        yield return new WaitForSeconds(.5f);
+        rotSpeed = 10;
+    }
+
     void LateUpdate()
     {
         switch (type)
@@ -40,8 +47,8 @@ public class CameraController : MonoBehaviour
         float mx = Input.GetAxis("Mouse X");
         float my = Input.GetAxis("Mouse Y");
 
-        rx += rotSpeed * my * Time.deltaTime;
-        ry += rotSpeed * mx * Time.deltaTime;
+        rx += rotSpeed * my * Time.deltaTime * rotSpeed;
+        ry += rotSpeed * mx * Time.deltaTime * rotSpeed;
 
         rx = Mathf.Clamp(rx, -80, 80);
         //ry = Mathf.Clamp(ry, -90, 90);
