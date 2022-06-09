@@ -17,7 +17,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    [SerializeField] private PoolingList poolingList;
+    [SerializeField] private PoolingListSO poolingList;
 
     private void Awake()
     {

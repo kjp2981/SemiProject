@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 07ccf748387beee479e96107802993ce, type: 3}
+  m_Name: AssaultRifleData
+  m_EditorClassIdentifier: 
+  gunPrefab: {fileID: 7094777192642963160, guid: 6c1520af2b76bea47a5b1432bf700ca8, type: 3}
+  delay: 0.1
+  damage: 2
+  animator: {fileID: 9100000, guid: f9d37b248aace994b95a9dde295e78b1, type: 2}
+  bulletPrefab: {fileID: 579551700362082489, guid: 2125881bae35ceb4f943f242c2b69792, type: 3}
+  isThoungh: 0
+  iskonck: 0
+  knockbackPower: 0
+  isInfinite: 0
+  bulletCount: 20

@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 07ccf748387beee479e96107802993ce, type: 3}
+  m_Name: PistolData
+  m_EditorClassIdentifier: 
+  gunPrefab: {fileID: 4109770765971529237, guid: 5928cd866a8a45d4aa887e7ccb78dcc3, type: 3}
+  delay: 1
+  damage: 3
+  animator: {fileID: 22100000, guid: 1b667770cee5c5148a1c76552c4cc784, type: 2}
+  bulletPrefab: {fileID: 579551700362082489, guid: 2125881bae35ceb4f943f242c2b69792, type: 3}
+  isThoungh: 0
+  iskonck: 0
+  knockbackPower: 0
+  isInfinite: 0
+  bulletCount: 20

@@ -10,7 +10,7 @@ public class PoolingPair
 }
 
 [CreateAssetMenu(menuName = "SO/System/PoolinList")]
-public class PoolingList : ScriptableObject
+public class PoolingListSO : ScriptableObject
 {
     public List<PoolingPair> list;
 }

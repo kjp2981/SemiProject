@@ -16,6 +16,8 @@ public class PlayerController : MonoBehaviour
     private float jumpPowr = 5f;
     private float yVelocity;
 
+    private bool isJump = false;
+
     private readonly int hashH = Animator.StringToHash("h");
     private readonly int hashV = Animator.StringToHash("v");
     private readonly int hashJump = Animator.StringToHash("jump");
@@ -32,12 +34,23 @@ public class PlayerController : MonoBehaviour
 
     void Move()
     {
-        yVelocity += -9.81f * Time.deltaTime;
         if (Input.GetButtonDown("Jump") && (cf & CollisionFlags.Below) != 0)
         {
+            //StartCoroutine(JumpCoroutine());
             animator.SetTrigger(hashJump);
-            yVelocity = jumpPowr;
+            //yVelocity = jumpPowr;
+            StartCoroutine(JumpCoroutine());
         }
+
+        if (isJump)
+        {
+            yVelocity = 9.81f * Time.deltaTime * jumpPowr;
+        }
+        else
+        {
+            yVelocity = -9.81f * Time.deltaTime;
+        }
+
 
         float h = Input.GetAxis("Horizontal");
         float v = Input.GetAxis("Vertical");
@@ -54,5 +67,12 @@ public class PlayerController : MonoBehaviour
             transform.rotation = Quaternion.Euler(0, MainCam.transform.eulerAngles.y, 0);
         }
         cf = cc.Move(dir * moveSpeed * Time.deltaTime);
+    }
+
+    private IEnumerator JumpCoroutine()
+    {
+        isJump = true;
+        yield return new WaitForSeconds(.5f);
+        isJump = false;
     }
 }
