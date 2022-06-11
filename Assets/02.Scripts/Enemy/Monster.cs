@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.AI;
 using static Define;
 
-public class Monster : PoolableMono, IEnemyStateMachine
+public class Monster : PoolableMono, IEnemyStateMachine, IHpController
 {
     [SerializeField]
     protected MonsterInfoSO monsteData;
@@ -22,13 +22,12 @@ public class Monster : PoolableMono, IEnemyStateMachine
     [SerializeField]
     private float attackDistance;
 
-    private int hp;
-    private int maxHp;
 
     protected int attackCnt = 0;
     protected float timer = 0f;
 
     private bool isDie = false;
+    private bool isDamage = false;
 
     protected readonly int hashMove = Animator.StringToHash("move");
     protected readonly int hashAttack = Animator.StringToHash("attack");
@@ -36,11 +35,13 @@ public class Monster : PoolableMono, IEnemyStateMachine
     protected readonly int hashAttackCount = Animator.StringToHash("attackCount");
 
     public EnemyState state { get; set; }
+    public int MAX_HP { get; set; }
+    public int currentHp { get; set; }
 
     void Start()
     {
-        maxHp = monsteData.maxHp;
-        hp = maxHp;
+        MAX_HP = monsteData.maxHp;
+        currentHp = MAX_HP;
         timer = monsteData.attackDelay;
         bodyCollider = GetComponent<Collider>();
         agent = GetComponent<NavMeshAgent>();
@@ -48,7 +49,7 @@ public class Monster : PoolableMono, IEnemyStateMachine
         agent.updateRotation = false;
 
         animator = GetComponent<Animator>();
-        ChangeState(EnemyState.Idle);
+        ChangeState(EnemyState.Chase);
         target = NexusTrm;
 
         HitColliderEnable(0);
@@ -60,6 +61,10 @@ public class Monster : PoolableMono, IEnemyStateMachine
 
         animator.SetBool(hashMove, !agent.isStopped);
         SetRotation();
+    }
+
+    void LateUpdate()
+    {
         CheckState();
         MosnterAction();
     }
@@ -76,20 +81,20 @@ public class Monster : PoolableMono, IEnemyStateMachine
 
     public virtual void Damage(int amount)
     {
-        hp -= amount;
+        currentHp -= amount;
 
         if(target == NexusTrm)
         {
             StartCoroutine(TargetChangeCoroutine(PlayerTrm));
         }
 
-        if(hp <= 0)
+        if(currentHp <= 0)
         {
             Die();
         }
     }
 
-    private void Die()
+    public void Die()
     {
         Debug.Log("Die");
         animator.SetTrigger(hashDie);
@@ -109,7 +114,7 @@ public class Monster : PoolableMono, IEnemyStateMachine
     public override void Reset()
     {
         target = NexusTrm;
-        hp = maxHp;
+        currentHp = MAX_HP;
         isDie = false;
         agent.isStopped = false;
         bodyCollider.enabled = true;
@@ -137,7 +142,7 @@ public class Monster : PoolableMono, IEnemyStateMachine
         else
         {
             StartCoroutine(TargetChangeCoroutine(NexusTrm));
-            ChangeState(EnemyState.Idle);
+            ChangeState(EnemyState.Chase);
         }
     }
 
@@ -148,6 +153,7 @@ public class Monster : PoolableMono, IEnemyStateMachine
         switch (state)
         {
             case EnemyState.Idle: // 약간 의도가 변경된 것 같은 느낌 일단 확실한건 이 게임에 대기 상태는 없다!
+                agent.isStopped = false;
                 break;
             case EnemyState.Chase:
                 agent.isStopped = false;
@@ -163,8 +169,7 @@ public class Monster : PoolableMono, IEnemyStateMachine
     {
         if (isDie) return;
 
-        Quaternion rot = Quaternion.LookRotation(target.position);
-        transform.rotation = rot;
+        transform.LookAt(target);
 
         timer += Time.deltaTime;
 
@@ -186,9 +191,25 @@ public class Monster : PoolableMono, IEnemyStateMachine
         }
     }
 
+    void IsDamageChange(int value)
+    {
+        isDamage = value != 0;
+    }
+
     private void OnTriggerEnter(Collider other)
     {
-        other.SendMessage("Damage", monsteData.attackDamage, SendMessageOptions.DontRequireReceiver);
+        if (other.CompareTag("Player"))
+        {
+            if (isDamage == true) return;
+            IsDamageChange(1);
+            other.SendMessage("Damage", monsteData.attackDamage, SendMessageOptions.DontRequireReceiver);
+        }
+        if (other.CompareTag("Nexus"))
+        {
+            if (isDamage == true) return;
+            IsDamageChange(1);
+            other.transform.parent.SendMessage("Damage", monsteData.attackDamage, SendMessageOptions.DontRequireReceiver);
+        }
     }
 
 #if UNITY_EDITOR

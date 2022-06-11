@@ -15,8 +15,8 @@ TagManager:
   - ENEMY
   - OBSTACLE
   - BULLET
-  - 
-  - 
+  - Player
+  - ENEMY_PUNCH
   - 
   - 
   - 

@@ -136,7 +136,7 @@ Animator:
   m_Controller: {fileID: 9100000, guid: 6a66bb8753ab6844f8c89f26780b5cf8, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
-  m_ApplyRootMotion: 1
+  m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
@@ -312,7 +312,7 @@ GameObject:
   m_Component:
   - component: {fileID: 448247659}
   - component: {fileID: 447752972}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: basic_rig R Hand
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -637,7 +637,7 @@ GameObject:
   m_Component:
   - component: {fileID: 448247637}
   - component: {fileID: 447753078}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: basic_rig L Hand
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -803,9 +803,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   monsteData: {fileID: 11400000, guid: 27b6449c8fe86784b8135100255cbce2, type: 2}
-  hitColliders: []
+  hitColliders:
+  - {fileID: 447753078}
+  - {fileID: 447752972}
   chaseDistance: 10
-  attackDistance: 2
+  attackDistance: 1.5
 --- !u!4 &448247617
 Transform:
   m_ObjectHideFlags: 0
@@ -1477,7 +1479,7 @@ PrefabInstance:
     - target: {fileID: -4078510073325154586, guid: dd429fa777638ef429ae03b5efdbf847, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: 4c373fd4dba073c48889c24b8a05ea29, type: 2}
+      objectReference: {fileID: 2100000, guid: 57b9566559fef6b419ce2c91878028fa, type: 2}
     - target: {fileID: -1852935247149713618, guid: dd429fa777638ef429ae03b5efdbf847, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 8
@@ -1485,7 +1487,11 @@ PrefabInstance:
     - target: {fileID: -1561328949604603633, guid: dd429fa777638ef429ae03b5efdbf847, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: 4c373fd4dba073c48889c24b8a05ea29, type: 2}
+      objectReference: {fileID: 2100000, guid: 57b9566559fef6b419ce2c91878028fa, type: 2}
+    - target: {fileID: -1475301676720713176, guid: dd429fa777638ef429ae03b5efdbf847, type: 3}
+      propertyPath: m_TagString
+      value: Nexus
+      objectReference: {fileID: 0}
     - target: {fileID: -1475301676720713176, guid: dd429fa777638ef429ae03b5efdbf847, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 8
@@ -1513,11 +1519,11 @@ PrefabInstance:
     - target: {fileID: 6160123205686199153, guid: dd429fa777638ef429ae03b5efdbf847, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: 4c373fd4dba073c48889c24b8a05ea29, type: 2}
+      objectReference: {fileID: 2100000, guid: 57b9566559fef6b419ce2c91878028fa, type: 2}
     - target: {fileID: 8444185141542139380, guid: dd429fa777638ef429ae03b5efdbf847, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: 4c373fd4dba073c48889c24b8a05ea29, type: 2}
+      objectReference: {fileID: 2100000, guid: 57b9566559fef6b419ce2c91878028fa, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dd429fa777638ef429ae03b5efdbf847, type: 3}
 --- !u!64 &878437173
@@ -1566,10 +1572,10 @@ MeshCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 878437176}
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 4
-  m_Convex: 1
+  m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 599379494061301584, guid: dd429fa777638ef429ae03b5efdbf847, type: 3}
 --- !u!1 &878437178 stripped
@@ -1585,10 +1591,10 @@ MeshCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 878437178}
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 4
-  m_Convex: 1
+  m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 3329674212930220310, guid: dd429fa777638ef429ae03b5efdbf847, type: 3}
 --- !u!1 &899175281
@@ -1933,6 +1939,24 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1732962956 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: dd429fa777638ef429ae03b5efdbf847, type: 3}
+  m_PrefabInstance: {fileID: 878437171}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1732962958
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1732962956}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d18fdf23e8348f34cb5722f98ceddd4a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHP: 50
 --- !u!1 &1801805439
 GameObject:
   m_ObjectHideFlags: 0
@@ -2141,7 +2165,7 @@ GameObject:
   - component: {fileID: 6390148200335621648}
   - component: {fileID: 6390148200335621651}
   - component: {fileID: 6390148200335621650}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
