@@ -1,19 +1,23 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using static Define;
 
 [RequireComponent(typeof(CharacterController))]
-public class PlayerController : MonoBehaviour
+public class PlayerController : MonoBehaviour, IHpController
 {
     private Animator animator;
     private CharacterController cc;
     private CollisionFlags cf = CollisionFlags.None;
 
     [SerializeField]
-    private float moveSpeed = 10f;
-    [SerializeField]
-    private float jumpPowr = 5f;
+    private PlayerInfoSO playerData;
+
+    //[SerializeField]
+    //private float moveSpeed = 10f;
+    //[SerializeField]
+    //private float jumpPowr = 5f;
     private float yVelocity;
 
     private bool isJump = false;
@@ -21,10 +25,17 @@ public class PlayerController : MonoBehaviour
     private readonly int hashH = Animator.StringToHash("h");
     private readonly int hashV = Animator.StringToHash("v");
     private readonly int hashJump = Animator.StringToHash("jump");
+
+    public int MAX_HP { get; set; }
+    public int currentHp { get; set; }
+
     void Start()
     {
         cc = GetComponent<CharacterController>();
         animator = GetComponent<Animator>();
+
+        MAX_HP = playerData.maxHp;
+        currentHp = MAX_HP;
     }
 
     void Update()
@@ -44,7 +55,7 @@ public class PlayerController : MonoBehaviour
 
         if (isJump)
         {
-            yVelocity = 9.81f * Time.deltaTime * jumpPowr;
+            yVelocity = 9.81f * Time.deltaTime * playerData.jumpPower;
         }
         else
         {
@@ -66,7 +77,7 @@ public class PlayerController : MonoBehaviour
         {
             transform.rotation = Quaternion.Euler(0, MainCam.transform.eulerAngles.y, 0);
         }
-        cf = cc.Move(dir * moveSpeed * Time.deltaTime);
+        cf = cc.Move(dir * playerData.moveSpeed * Time.deltaTime);
     }
 
     private IEnumerator JumpCoroutine()
@@ -74,5 +85,20 @@ public class PlayerController : MonoBehaviour
         isJump = true;
         yield return new WaitForSeconds(.5f);
         isJump = false;
+    }
+
+    public void Damage(int amount)
+    {
+        currentHp -= amount;
+
+        if (currentHp <= 0)
+        {
+            Die();
+        }
+    }
+
+    public void Die()
+    {
+        Debug.Log("Die");
     }
 }

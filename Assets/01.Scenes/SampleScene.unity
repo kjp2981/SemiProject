@@ -311,6 +311,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 448247659}
+  - component: {fileID: 447752972}
   m_Layer: 0
   m_Name: basic_rig R Hand
   m_TagString: Untagged
@@ -318,6 +319,20 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!136 &447752972
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 447752971}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  m_Radius: 0.5
+  m_Height: 1
+  m_Direction: 1
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &447752973
 GameObject:
   m_ObjectHideFlags: 0
@@ -621,6 +636,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 448247637}
+  - component: {fileID: 447753078}
   m_Layer: 0
   m_Name: basic_rig L Hand
   m_TagString: Untagged
@@ -628,6 +644,20 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!136 &447753078
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 447753077}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  m_Radius: 0.5
+  m_Height: 1
+  m_Direction: 1
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &447753079
 GameObject:
   m_ObjectHideFlags: 0
@@ -773,6 +803,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   monsteData: {fileID: 11400000, guid: 27b6449c8fe86784b8135100255cbce2, type: 2}
+  hitColliders: []
   chaseDistance: 10
   attackDistance: 2
 --- !u!4 &448247617
@@ -1446,7 +1477,7 @@ PrefabInstance:
     - target: {fileID: -4078510073325154586, guid: dd429fa777638ef429ae03b5efdbf847, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: 57b9566559fef6b419ce2c91878028fa, type: 2}
+      objectReference: {fileID: 2100000, guid: 4c373fd4dba073c48889c24b8a05ea29, type: 2}
     - target: {fileID: -1852935247149713618, guid: dd429fa777638ef429ae03b5efdbf847, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 8
@@ -1454,7 +1485,7 @@ PrefabInstance:
     - target: {fileID: -1561328949604603633, guid: dd429fa777638ef429ae03b5efdbf847, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: 57b9566559fef6b419ce2c91878028fa, type: 2}
+      objectReference: {fileID: 2100000, guid: 4c373fd4dba073c48889c24b8a05ea29, type: 2}
     - target: {fileID: -1475301676720713176, guid: dd429fa777638ef429ae03b5efdbf847, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 8
@@ -1462,6 +1493,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: dd429fa777638ef429ae03b5efdbf847, type: 3}
       propertyPath: m_Name
       value: Obelisk_zodiac_low
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: dd429fa777638ef429ae03b5efdbf847, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: dd429fa777638ef429ae03b5efdbf847, type: 3}
       propertyPath: m_TagString
@@ -1478,11 +1513,11 @@ PrefabInstance:
     - target: {fileID: 6160123205686199153, guid: dd429fa777638ef429ae03b5efdbf847, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: 57b9566559fef6b419ce2c91878028fa, type: 2}
+      objectReference: {fileID: 2100000, guid: 4c373fd4dba073c48889c24b8a05ea29, type: 2}
     - target: {fileID: 8444185141542139380, guid: dd429fa777638ef429ae03b5efdbf847, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: 57b9566559fef6b419ce2c91878028fa, type: 2}
+      objectReference: {fileID: 2100000, guid: 4c373fd4dba073c48889c24b8a05ea29, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dd429fa777638ef429ae03b5efdbf847, type: 3}
 --- !u!64 &878437173
@@ -2125,8 +2160,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 50f7e969bd3dd6f4eb5c252608c6ad78, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 10
-  jumpPowr: 5
+  playerData: {fileID: 11400000, guid: bd5651871b4c2854e809a807212b8293, type: 2}
 --- !u!143 &6390148200335621649
 CharacterController:
   m_ObjectHideFlags: 0

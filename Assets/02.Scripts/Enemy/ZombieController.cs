@@ -8,4 +8,9 @@ public class ZombieController : Monster
     {
         base.Damage(amount);
     }
+
+    protected override void Attack()
+    {
+        base.Attack();
+    }
 }

@@ -10,8 +10,10 @@ public class Monster : PoolableMono, IEnemyStateMachine
     protected MonsterInfoSO monsteData;
 
     protected NavMeshAgent agent;
-    private Animator animator;
+    protected Animator animator;
     private Collider bodyCollider;
+    [SerializeField]
+    private Collider[] hitColliders;
 
     protected Transform target;
 
@@ -23,15 +25,15 @@ public class Monster : PoolableMono, IEnemyStateMachine
     private int hp;
     private int maxHp;
 
-    private int attackCnt = 0;
-    private float timer = 0f;
+    protected int attackCnt = 0;
+    protected float timer = 0f;
 
     private bool isDie = false;
 
-    private readonly int hashMove = Animator.StringToHash("move");
-    private readonly int hashAttack = Animator.StringToHash("attack");
-    private readonly int hashDie = Animator.StringToHash("die");
-    private readonly int hashAttackCount = Animator.StringToHash("attackCount");
+    protected readonly int hashMove = Animator.StringToHash("move");
+    protected readonly int hashAttack = Animator.StringToHash("attack");
+    protected readonly int hashDie = Animator.StringToHash("die");
+    protected readonly int hashAttackCount = Animator.StringToHash("attackCount");
 
     public EnemyState state { get; set; }
 
@@ -48,6 +50,8 @@ public class Monster : PoolableMono, IEnemyStateMachine
         animator = GetComponent<Animator>();
         ChangeState(EnemyState.Idle);
         target = NexusTrm;
+
+        HitColliderEnable(0);
     }
 
     void Update()
@@ -155,7 +159,7 @@ public class Monster : PoolableMono, IEnemyStateMachine
         }
     }
 
-    void Attack()
+    protected virtual void Attack()
     {
         if (isDie) return;
 
@@ -166,11 +170,25 @@ public class Monster : PoolableMono, IEnemyStateMachine
 
         if(timer >= monsteData.attackDelay)
         {
+            //HitColliderEnable(1);
             attackCnt = (attackCnt + 1) % 2;
             animator.SetFloat(hashAttackCount, attackCnt);
             animator.SetTrigger(hashAttack);
             timer = 0f;
         }
+    }
+
+    void HitColliderEnable(int value)
+    {
+        for (int i = 0; i < hitColliders.Length; i++)
+        {
+            hitColliders[i].enabled = (value != 0);
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        other.SendMessage("Damage", monsteData.attackDamage, SendMessageOptions.DontRequireReceiver);
     }
 
 #if UNITY_EDITOR
