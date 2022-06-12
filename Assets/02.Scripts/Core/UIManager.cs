@@ -6,22 +6,35 @@ using UnityEngine.UI;
 public class UIManager : MonoBehaviour
 {
     #region Singleton
-    private UIManager instance;
-    public UIManager Instance
+    private static UIManager instance;
+    public static UIManager Instance
     {
         get
         {
             if(instance == null)
             {
-                instance = this;
+                instance = null;
             }
             return instance;
         }
     }
     #endregion
 
-    //[SerializeField]
-    //private 
+    [SerializeField]
+    private Image nexusHpbar;
+
+    private void Awake()
+    {
+        if(instance == null)
+        {
+            instance = this;
+            DontDestroyOnLoad(this.gameObject);
+        }
+        else
+        {
+            Destroy(this.gameObject);
+        }
+    }
 
     void Start()
     {
@@ -31,5 +44,10 @@ public class UIManager : MonoBehaviour
     void Update()
     {
         
+    }
+
+    public void NexusHpbarValue(IHpController hpController)
+    {
+        nexusHpbar.fillAmount = (float)hpController.currentHp / (float)hpController.MAX_HP;
     }
 }

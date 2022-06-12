@@ -4,24 +4,35 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    private GameManager instance = null;
-    public GameManager Instance
+    #region Singleton
+    private static GameManager instance = null;
+    public static GameManager Instance
     {
         get
         {
             if(instance == null)
             {
-                instance = this;
+                instance = null;
             }
             return instance;
         }
     }
+    #endregion
 
     [SerializeField] private PoolingListSO poolingList;
 
     private void Awake()
     {
-        instance = this;
+        if (instance == null)
+        {
+            instance = this;
+            DontDestroyOnLoad(this.gameObject);
+        }
+        else
+        {
+            Destroy(this.gameObject);
+        }
+
 
         PoolManager.Instance = new PoolManager(transform);
 

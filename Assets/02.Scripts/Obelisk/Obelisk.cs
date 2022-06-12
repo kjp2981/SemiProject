@@ -19,8 +19,9 @@ public class Obelisk : MonoBehaviour, IHpController
     public void Damage(int amount)
     {
         currentHp -= amount;
+        UIManager.Instance.NexusHpbarValue(GetComponent<IHpController>());
 
-        if(currentHp <= 0)
+        if (currentHp <= 0)
         {
             Die();
         }
@@ -30,6 +31,8 @@ public class Obelisk : MonoBehaviour, IHpController
     {
         Debug.Log("Obelisk is Destroy");
         // TODO : 넥서스 파괴 이펙트 넣기
-        //          게임 UI 뛰우기 등...
+        //          게임 UI 뛰우기
+        //          게임 끝내기
+        //          모든 적 멈추고 없애기
     }
 }
