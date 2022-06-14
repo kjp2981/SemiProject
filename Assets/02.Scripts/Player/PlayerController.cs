@@ -59,7 +59,7 @@ public class PlayerController : MonoBehaviour, IHpController
         }
         else
         {
-            yVelocity = -9.81f * Time.deltaTime;
+            yVelocity = -9.81f * Time.deltaTime * playerData.jumpPower;
         }
 
 

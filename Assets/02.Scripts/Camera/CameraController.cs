@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static Define;
 
 public class CameraController : MonoBehaviour
 {
@@ -25,6 +26,8 @@ public class CameraController : MonoBehaviour
 
     private IEnumerator Start()
     {
+        firstCameraPos = PlayerTrm.transform.Find("FirstCameraPos").GetComponent<Transform>();
+
         rotSpeed = 0;
         yield return new WaitForSeconds(.5f);
         rotSpeed = 10;

@@ -19,7 +19,7 @@ public class Obelisk : MonoBehaviour, IHpController
     public void Damage(int amount)
     {
         currentHp -= amount;
-        UIManager.Instance.NexusHpbarValue(GetComponent<IHpController>());
+        //UIManager.Instance.NexusHpbarValue(GetComponent<IHpController>());
 
         if (currentHp <= 0)
         {

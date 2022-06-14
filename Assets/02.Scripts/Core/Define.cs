@@ -7,6 +7,7 @@ public class Define
     private static Camera mainCam = null;
     private static Transform playerTrm = null;
     private static Transform nexusTrm = null;
+    private static Transform enemySpawnPos = null;
 
     public static Camera MainCam
     {
@@ -38,9 +39,21 @@ public class Define
         {
             if(nexusTrm == null)
             {
-                nexusTrm = GameObject.FindWithTag("Nexus").GetComponent<Transform>();
+                nexusTrm = GameObject.FindWithTag("Nexus").transform.GetChild(0).GetComponent<Transform>();
             }
             return nexusTrm;
+        }
+    }
+
+    public static Transform EnemySpawnPos
+    {
+        get
+        {
+            if(enemySpawnPos == null)
+            {
+                enemySpawnPos = GameObject.FindWithTag("EnemySpawn").GetComponent<Transform>();
+            }
+            return enemySpawnPos;
         }
     }
 }

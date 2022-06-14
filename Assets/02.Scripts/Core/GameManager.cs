@@ -21,12 +21,13 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] private PoolingListSO poolingList;
 
+    private int stageCount = 0;
+
     private void Awake()
     {
         if (instance == null)
         {
             instance = this;
-            DontDestroyOnLoad(this.gameObject);
         }
         else
         {
@@ -37,6 +38,8 @@ public class GameManager : MonoBehaviour
         PoolManager.Instance = new PoolManager(transform);
 
         CreatePool();
+
+        StartCoroutine(EnemySpawner.Instance.SpawnEnemy(1));
     }
 
     void CreatePool()
