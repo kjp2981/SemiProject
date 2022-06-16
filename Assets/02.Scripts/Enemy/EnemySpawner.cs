@@ -50,16 +50,16 @@ public class EnemySpawner : MonoBehaviour
 
     public IEnumerator SpawnEnemy(int stage)
     {
-        for(int i = 0; i < spawnData[stage].monsterSpawnList.Count; i++)
-        {
-            yield return new WaitForSeconds(1f);
-            for(int j = 0; j < spawnData[stage].monsterSpawnList[i].count; j++)
-            {
-                yield return new WaitForSeconds(.3f);
-                Monster monster = PoolManager.Instance.Pop(spawnData[stage].monsterSpawnList[i].prefab.name) as Monster;
-                monster.transform.position = EnemySpawnPos.position;
-            }
-        }
+        //for(int i = 0; i < spawnData[stage].monsterSpawnList.Count; i++)
+        //{
+        //    yield return new WaitForSeconds(1f);
+        //    for(int j = 0; j < spawnData[stage].monsterSpawnList[i].count; j++)
+        //    {
+        //        yield return new WaitForSeconds(.3f);
+        //        Monster monster = PoolManager.Instance.Pop(spawnData[stage].monsterSpawnList[i].prefab.name) as Monster;
+        //        monster.transform.position = EnemySpawnPos.position;
+        //    }
+        //}
 
         foreach(KeyValuePair<int, List<MonsterPair>> pair in spawnDictionary)
         {
@@ -67,11 +67,13 @@ public class EnemySpawner : MonoBehaviour
             {
                 for(int i = 0; i < pair.Value.Count; i++)
                 {
+                    yield return new WaitForSeconds(2f);
                     for(int j = 0; j < pair.Value[i].count; j++)
                     {
-                        yield return new WaitForSeconds(.3f);
+                        yield return new WaitForSeconds(1);
                         Monster monster = PoolManager.Instance.Pop(pair.Value[i].prefab.name) as Monster;
-                        monster.transform.position = EnemySpawnPos.position;
+                        //monster.transform.position = EnemySpawnPos.position;
+                        monster.transform.position = EnemySpawnPos.localPosition;
                     }
                 }
             }

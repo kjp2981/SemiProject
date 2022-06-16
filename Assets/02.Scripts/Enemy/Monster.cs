@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.AI;
 using static Define;
 
-public class Monster : PoolableMono, IEnemyStateMachine, IHpController
+public class Monster : PoolableMono, IEnemyStateMachine, IHpController, IKnockback
 {
     [SerializeField]
     protected MonsterInfoSO monsteData;
@@ -96,7 +96,6 @@ public class Monster : PoolableMono, IEnemyStateMachine, IHpController
 
     public void Die()
     {
-        Debug.Log("Die");
         animator.SetTrigger(hashDie);
         agent.isStopped = true;
         bodyCollider.enabled = false;
@@ -113,6 +112,11 @@ public class Monster : PoolableMono, IEnemyStateMachine, IHpController
 
     public override void Reset()
     {
+        if (agent == null)
+            agent = GetComponent<NavMeshAgent>();
+        if (bodyCollider == null)
+            bodyCollider = GetComponent<Collider>();
+
         target = NexusTrm;
         currentHp = MAX_HP;
         isDie = false;
@@ -210,6 +214,12 @@ public class Monster : PoolableMono, IEnemyStateMachine, IHpController
             IsDamageChange(1);
             other.transform.parent.SendMessage("Damage", monsteData.attackDamage, SendMessageOptions.DontRequireReceiver);
         }
+    }
+
+    public void Knockback(float knockbackPower, Vector3 direction)
+    {
+        Vector3 dir = direction * knockbackPower;
+        transform.position += dir;
     }
 
 #if UNITY_EDITOR

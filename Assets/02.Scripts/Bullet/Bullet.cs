@@ -40,6 +40,7 @@ public class Bullet : PoolableMono
             impact.transform.SetPositionAndRotation(collider.GetContact(0).point, rot);
 
             collider.gameObject.GetComponent<Monster>().Damage(1);
+            //collider.gameObject.GetComponent<Monster>().Knockback() // 넉백인데 추후 구현
         }
         if(collider.gameObject.layer == LayerMask.NameToLayer("OBSTACLE"))
         {

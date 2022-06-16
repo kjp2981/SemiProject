@@ -51,7 +51,7 @@ public class Define
         {
             if(enemySpawnPos == null)
             {
-                enemySpawnPos = GameObject.FindWithTag("EnemySpawn").GetComponent<Transform>();
+                enemySpawnPos = GameObject.FindWithTag("EnemySpawn").transform.GetComponent<Transform>();
             }
             return enemySpawnPos;
         }

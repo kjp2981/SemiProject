@@ -10,8 +10,13 @@ public class Obelisk : MonoBehaviour, IHpController
     public int MAX_HP { get; set; }
     public int currentHp { get; set; }
 
+    private Animation animation;
+
     void Start()
     {
+        animation = GetComponent<Animation>();
+        animation.CrossFade("Idle", 0.25f);
+
         MAX_HP = maxHP;
         currentHp = MAX_HP;
     }
@@ -19,7 +24,7 @@ public class Obelisk : MonoBehaviour, IHpController
     public void Damage(int amount)
     {
         currentHp -= amount;
-        //UIManager.Instance.NexusHpbarValue(GetComponent<IHpController>());
+        UIManager.Instance.NexusHpbarValue(GetComponent<IHpController>());
 
         if (currentHp <= 0)
         {

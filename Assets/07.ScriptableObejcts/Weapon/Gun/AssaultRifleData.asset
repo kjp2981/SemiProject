@@ -18,7 +18,8 @@ MonoBehaviour:
   animator: {fileID: 9100000, guid: f9d37b248aace994b95a9dde295e78b1, type: 2}
   bulletPrefab: {fileID: 579551700362082489, guid: 2125881bae35ceb4f943f242c2b69792, type: 3}
   isThoungh: 0
-  iskonck: 0
-  knockbackPower: 0
-  isInfinite: 0
-  bulletCount: 20
+  iskonck: 1
+  knockbackPower: 1
+  isInfinite: 1
+  bulletCount: 100
+  reloadDelay: 5

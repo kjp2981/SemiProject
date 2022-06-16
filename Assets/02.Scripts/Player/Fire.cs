@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -11,6 +12,7 @@ public class Fire : MonoBehaviour
     private Gun currentGunData;
 
     private int gunDataCnt = 0;
+    private int bulletCnt;
     public int GunDataCnt
     {
         get => gunDataCnt;
@@ -22,8 +24,12 @@ public class Fire : MonoBehaviour
     }
 
     private float timer = 0f;
+    private float gunChangeTimer = 0f;
+    [SerializeField]
+    private float gunChangeDelay;
 
     private bool isAutoShoot => Input.GetMouseButton(0);
+    private bool isReloading = false;
 
     public Transform gunPos;
     private Transform firePos;
@@ -40,35 +46,65 @@ public class Fire : MonoBehaviour
         currentGunData = currentGun.GetComponent<Gun>();
 
         timer = currentGunData.GunData.delay;
+        bulletCnt = currentGunData.GunData.bulletCount;
     }
 
     void Update()
     {
+        gunChangeTimer += Time.deltaTime;
+
         float wheelInput = Input.GetAxis("Mouse ScrollWheel");
-        if(wheelInput > 0)
+        if (gunChangeTimer >= gunChangeDelay)
         {
-            GunDataCnt = (GunDataCnt + 1) % gunList.Count;
-        }
-        else if(wheelInput < 0)
-        {
-            GunDataCnt = Mathf.Abs(GunDataCnt - 1) % gunList.Count;
+            if (wheelInput > 0)
+            {
+                GunDataCnt = (GunDataCnt + 1) % gunList.Count;
+                gunChangeTimer = 0f;
+            }
+            else if (wheelInput < 0)
+            {
+                GunDataCnt = Mathf.Abs(GunDataCnt - 1) % gunList.Count;
+                gunChangeTimer = 0f;
+            }
         }
 
         timer += Time.deltaTime;
 
-        if(timer >= currentGunData.GunData.delay)
+        animator.SetBool(hashAutoShoot, isAutoShoot && !isReloading);
+        if(timer >= currentGunData.GunData.delay && isReloading == false)
         {
-            animator.SetBool(hashAutoShoot, isAutoShoot);
-            if (isAutoShoot)
+            if (bulletCnt > 0)
             {
-                Bullet bullet = PoolManager.Instance.Pop("Bullet") as Bullet;
-                bullet.transform.SetPositionAndRotation(firePos.position, firePos.rotation);
+                if (isAutoShoot)
+                {
+                    bulletCnt--;
+                    Bullet bullet = PoolManager.Instance.Pop("Bullet") as Bullet;
+                    bullet.transform.SetPositionAndRotation(firePos.position, firePos.rotation);
+                    bullet.GetComponent<TrailRenderer>().Clear();
 
-                MuzzleImpact muzzle = PoolManager.Instance.Pop("MuzzleFlash") as MuzzleImpact;
-                muzzle.transform.SetPositionAndRotation(firePos.position, firePos.rotation);
-                timer = 0f;
+                    MuzzleImpact muzzle = PoolManager.Instance.Pop("MuzzleFlash") as MuzzleImpact;
+                    muzzle.transform.SetPositionAndRotation(firePos.position, firePos.rotation);
+                    timer = 0f;
+                }
+            }
+            else
+            {
+                StartCoroutine(Reload());
             }
         }
+
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            StartCoroutine(Reload());
+        }
+    }
+
+    private IEnumerator Reload()
+    {
+        isReloading = true;
+        yield return new WaitForSeconds(currentGunData.GunData.reloadDelay);
+        bulletCnt = currentGunData.GunData.bulletCount;
+        isReloading = false;
     }
 
     void GetGun()
@@ -80,6 +116,7 @@ public class Fire : MonoBehaviour
         currentGunData = currentGun.GetComponent<Gun>();
         firePos = gunList[GunDataCnt].transform.Find("FirePos");
         animator.runtimeAnimatorController = currentGunData.GunData.animator;
+        bulletCnt = currentGunData.GunData.bulletCount;
     }
 
     void AllClear()

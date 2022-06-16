@@ -8,13 +8,13 @@ public class MuzzleImpact : PoolableMono
 
     private void Awake()
     {
-        particle = GetComponent<ParticleSystem>();
+        particle = GetComponentInChildren<ParticleSystem>();
     }
 
     private void OnEnable()
     {
         if (particle == null)
-            particle = GetComponent<ParticleSystem>();
+            particle = GetComponentInChildren<ParticleSystem>();
         particle.Play();
     }
 

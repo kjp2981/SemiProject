@@ -25,6 +25,9 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
+        Cursor.lockState = CursorLockMode.Confined;
+        Cursor.visible = false;
+
         if (instance == null)
         {
             instance = this;
@@ -38,8 +41,6 @@ public class GameManager : MonoBehaviour
         PoolManager.Instance = new PoolManager(transform);
 
         CreatePool();
-
-        StartCoroutine(EnemySpawner.Instance.SpawnEnemy(1));
     }
 
     void CreatePool()
@@ -48,5 +49,10 @@ public class GameManager : MonoBehaviour
         {
             PoolManager.Instance.CreatePool(pair.prefab, pair.count);
         }
+    }
+
+    public void StartStage(int stageNum)
+    {
+        StartCoroutine(EnemySpawner.Instance.SpawnEnemy(stageNum));
     }
 }

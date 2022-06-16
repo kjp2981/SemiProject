@@ -5,7 +5,7 @@ using UnityEngine;
 using static Define;
 
 [RequireComponent(typeof(CharacterController))]
-public class PlayerController : MonoBehaviour, IHpController
+public class PlayerController : MonoBehaviour, IHpController, IKnockback
 {
     private Animator animator;
     private CharacterController cc;
@@ -13,11 +13,9 @@ public class PlayerController : MonoBehaviour, IHpController
 
     [SerializeField]
     private PlayerInfoSO playerData;
+    [SerializeField]
+    private Transform spineTrm;
 
-    //[SerializeField]
-    //private float moveSpeed = 10f;
-    //[SerializeField]
-    //private float jumpPowr = 5f;
     private float yVelocity;
 
     private bool isJump = false;
@@ -41,6 +39,11 @@ public class PlayerController : MonoBehaviour, IHpController
     void Update()
     {
         Move();
+
+        Vector3 pos = MainCam.transform.eulerAngles;
+        pos.y = 0;
+        pos.z = 0;
+        spineTrm.rotation = Quaternion.Euler(pos);
     }
 
     void Move()
@@ -90,6 +93,7 @@ public class PlayerController : MonoBehaviour, IHpController
     public void Damage(int amount)
     {
         currentHp -= amount;
+        UIManager.Instance.PlayerHpbarValue(GetComponent<IHpController>());
 
         if (currentHp <= 0)
         {
@@ -100,5 +104,11 @@ public class PlayerController : MonoBehaviour, IHpController
     public void Die()
     {
         Debug.Log("Die");
+    }
+
+    public void Knockback(float knockbackPower, Vector3 direction)
+    {
+        Vector3 dir = direction * knockbackPower;
+        transform.position += dir;
     }
 }

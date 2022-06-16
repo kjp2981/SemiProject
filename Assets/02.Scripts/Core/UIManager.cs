@@ -22,6 +22,8 @@ public class UIManager : MonoBehaviour
 
     [SerializeField]
     private Image nexusHpbar;
+    [SerializeField]
+    private Image playerHpbar;
 
     private void Awake()
     {
@@ -48,5 +50,10 @@ public class UIManager : MonoBehaviour
     public void NexusHpbarValue(IHpController hpController)
     {
         nexusHpbar.fillAmount = (float)hpController.currentHp / (float)hpController.MAX_HP;
+    }
+
+    public void PlayerHpbarValue(IHpController hpController)
+    {
+        playerHpbar.fillAmount = (float)hpController.currentHp / (float)hpController.MAX_HP;
     }
 }
