@@ -24,7 +24,17 @@ public class EnemySpawner : MonoBehaviour
     [SerializeField]
     private MonsterSpawnSO[] spawnData;
 
+    private int stageCnt = 1;
+
+    public int StageCnt
+    {
+        get => spawnData.Length;
+    }
+
     public Dictionary<int, List<MonsterPair>> spawnDictionary = new Dictionary<int, List<MonsterPair>>();
+
+    private int monsterCnt = 0;
+    private int deadCnt = 1;
 
     void Awake()
     {
@@ -41,42 +51,59 @@ public class EnemySpawner : MonoBehaviour
         {
             spawnDictionary.Add(i + 1, spawnData[i].monsterSpawnList);
         }
+    }
 
-        //foreach(KeyValuePair<int, List<MonsterPair>> pair in spawnDictionary)
-        //{
-        //    Debug.Log($"{pair.Key}, {pair.Value[1].count}, {pair.Value[1].prefab}");
-        //}
+    public bool isStage()
+    {
+        return deadCnt != monsterCnt;
     }
 
     public IEnumerator SpawnEnemy(int stage)
     {
-        //for(int i = 0; i < spawnData[stage].monsterSpawnList.Count; i++)
+        //for (int idx = 1; idx <= spawnData.Length; idx++)
         //{
-        //    yield return new WaitForSeconds(1f);
-        //    for(int j = 0; j < spawnData[stage].monsterSpawnList[i].count; j++)
+        //    foreach (KeyValuePair<int, List<MonsterPair>> pair in spawnDictionary)
         //    {
-        //        yield return new WaitForSeconds(.3f);
-        //        Monster monster = PoolManager.Instance.Pop(spawnData[stage].monsterSpawnList[i].prefab.name) as Monster;
-        //        monster.transform.position = EnemySpawnPos.position;
+        //        for (int i = 0; i < pair.Value.Count; i++)
+        //        {
+        //            monsterCnt += pair.Value[i].count;
+        //            yield return new WaitForSeconds(2f);
+        //            for (int j = 0; j < pair.Value[i].count; j++)
+        //            {
+        //                yield return new WaitForSeconds(1);
+        //                Monster monster = PoolManager.Instance.Pop(pair.Value[i].prefab.name) as Monster;
+        //                //monster.transform.position = EnemySpawnPos.position;
+        //                monster.transform.position = EnemySpawnPos.localPosition;
+        //            }
+        //        }
         //    }
+        //    yield return new WaitForSeconds(10);
         //}
 
-        foreach(KeyValuePair<int, List<MonsterPair>> pair in spawnDictionary)
+        foreach (KeyValuePair<int, List<MonsterPair>> pair in spawnDictionary)
         {
-            if(stage == pair.Key)
+            if (pair.Key == stage)
             {
                 for(int i = 0; i < pair.Value.Count; i++)
                 {
+                    monsterCnt += pair.Value[i].count;
+                }
+                for (int i = 0; i < pair.Value.Count; i++)
+                {
                     yield return new WaitForSeconds(2f);
-                    for(int j = 0; j < pair.Value[i].count; j++)
+                    for (int j = 0; j < pair.Value[i].count; j++)
                     {
                         yield return new WaitForSeconds(1);
                         Monster monster = PoolManager.Instance.Pop(pair.Value[i].prefab.name) as Monster;
-                        //monster.transform.position = EnemySpawnPos.position;
-                        monster.transform.position = EnemySpawnPos.localPosition;
+                        monster.transform.position = EnemySpawnPos.position;
                     }
                 }
             }
         }
+    }
+
+    public void DeadCount()
+    {
+        deadCnt += 1;
     }
 }

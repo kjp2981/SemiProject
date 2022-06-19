@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Nexus
   - EnemySpawn
+  - Handle
   layers:
   - Default
   - TransparentFX
@@ -18,7 +19,7 @@ TagManager:
   - BULLET
   - Player
   - ENEMY_PUNCH
-  - 
+  - HANDLE
   - 
   - 
   - 

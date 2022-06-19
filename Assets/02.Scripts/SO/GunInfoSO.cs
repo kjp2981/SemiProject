@@ -5,6 +5,9 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "SO/Weapon/Gun")]
 public class GunInfoSO : ScriptableObject
 {
+    public string gunName;
+    public Sprite gunImage;
+
     public GameObject gunPrefab;
     public float delay;
     public float damage;

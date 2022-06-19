@@ -81,6 +81,8 @@ public class Monster : PoolableMono, IEnemyStateMachine, IHpController, IKnockba
 
     public virtual void Damage(int amount)
     {
+        if (isDie == true) return;
+
         currentHp -= amount;
 
         if(target == NexusTrm)
@@ -96,7 +98,9 @@ public class Monster : PoolableMono, IEnemyStateMachine, IHpController, IKnockba
 
     public void Die()
     {
+        EnemySpawner.Instance.DeadCount();
         animator.SetTrigger(hashDie);
+        StopAllCoroutines();
         agent.isStopped = true;
         bodyCollider.enabled = false;
         isDie = true;

@@ -21,8 +21,6 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] private PoolingListSO poolingList;
 
-    private int stageCount = 0;
-
     private void Awake()
     {
         Cursor.lockState = CursorLockMode.Confined;
@@ -41,6 +39,8 @@ public class GameManager : MonoBehaviour
         PoolManager.Instance = new PoolManager(transform);
 
         CreatePool();
+
+        StartStage();
     }
 
     void CreatePool()
@@ -51,8 +51,8 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void StartStage(int stageNum)
+    public void StartStage()
     {
-        StartCoroutine(EnemySpawner.Instance.SpawnEnemy(stageNum));
+        StartCoroutine(EnemySpawner.Instance.SpawnEnemy(1));
     }
 }

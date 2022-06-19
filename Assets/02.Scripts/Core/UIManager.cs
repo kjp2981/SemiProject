@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -24,6 +25,14 @@ public class UIManager : MonoBehaviour
     private Image nexusHpbar;
     [SerializeField]
     private Image playerHpbar;
+
+    [SerializeField]
+    private TextMeshProUGUI gunText;
+    [SerializeField]
+    private Image gunImage;
+
+    [SerializeField]
+    private Image realodImage;
 
     private void Awake()
     {
@@ -55,5 +64,17 @@ public class UIManager : MonoBehaviour
     public void PlayerHpbarValue(IHpController hpController)
     {
         playerHpbar.fillAmount = (float)hpController.currentHp / (float)hpController.MAX_HP;
+    }
+
+    public void ChangeGunInfo(string name, Sprite sprite)
+    {
+        gunText.SetText(name);
+        gunImage.sprite = sprite;
+        gunImage.SetNativeSize();
+    }
+
+    public void SetReloadImageActive(bool isActive)
+    {
+        realodImage.gameObject.SetActive(isActive);
     }
 }

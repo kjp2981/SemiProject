@@ -12,6 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 07ccf748387beee479e96107802993ce, type: 3}
   m_Name: PistolData
   m_EditorClassIdentifier: 
+  gunName: Pistol
+  gunImage: {fileID: 21300022, guid: 6674e8c43c63e4f4184cbd009379498d, type: 3}
   gunPrefab: {fileID: 4109770765971529237, guid: 5928cd866a8a45d4aa887e7ccb78dcc3, type: 3}
   delay: 1
   damage: 3
@@ -20,6 +22,5 @@ MonoBehaviour:
   isThoungh: 0
   iskonck: 1
   knockbackPower: 5
-  isInfinite: 1
   bulletCount: 16
   reloadDelay: 3

@@ -44,6 +44,7 @@ public class Fire : MonoBehaviour
         firePos = gunPos.transform.GetChild(0).Find("FirePos");
         currentGun = gunList[0];
         currentGunData = currentGun.GetComponent<Gun>();
+        UIManager.Instance.ChangeGunInfo(currentGunData.GunData.gunName, currentGunData.GunData.gunImage);
 
         timer = currentGunData.GunData.delay;
         bulletCnt = currentGunData.GunData.bulletCount;
@@ -102,8 +103,10 @@ public class Fire : MonoBehaviour
     private IEnumerator Reload()
     {
         isReloading = true;
-        yield return new WaitForSeconds(currentGunData.GunData.reloadDelay);
+        UIManager.Instance.SetReloadImageActive(true);
+        yield return new WaitForSeconds(currentGunData.GunData.reloadDelay); 
         bulletCnt = currentGunData.GunData.bulletCount;
+        UIManager.Instance.SetReloadImageActive(false);
         isReloading = false;
     }
 
@@ -114,6 +117,7 @@ public class Fire : MonoBehaviour
 
         currentGun = gunList[GunDataCnt];
         currentGunData = currentGun.GetComponent<Gun>();
+        UIManager.Instance.ChangeGunInfo(currentGunData.GunData.gunName, currentGunData.GunData.gunImage);
         firePos = gunList[GunDataCnt].transform.Find("FirePos");
         animator.runtimeAnimatorController = currentGunData.GunData.animator;
         bulletCnt = currentGunData.GunData.bulletCount;

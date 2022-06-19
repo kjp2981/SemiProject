@@ -21,8 +21,14 @@ public class CameraController : MonoBehaviour
     [SerializeField]
     private float rotSpeed = 10f;
 
-    public Transform firstCameraPos;
+    private Transform firstCameraPos;
     #endregion
+
+    private RaycastHit ray;
+    [SerializeField]
+    private float rayDistance = 1;
+    [SerializeField]
+    private LayerMask hitLayer;
 
     private IEnumerator Start()
     {

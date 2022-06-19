@@ -31,17 +31,17 @@ public class FloorSegment : MonoBehaviour
         }
     }
 
-    private void OnCollisionEnter(Collision collision)
-    {
-        if (collision.collider.CompareTag("Player"))
-        {
-            isUp = true;
-        }
-    }
-
     private void OnCollisionExit(Collision collision)
     {
         if (collision.collider.CompareTag("Player"))
+        {
+            isUp = false;
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("Player"))
         {
             isUp = false;
         }
