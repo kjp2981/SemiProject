@@ -24,12 +24,6 @@ public class CameraController : MonoBehaviour
     private Transform firstCameraPos;
     #endregion
 
-    private RaycastHit ray;
-    [SerializeField]
-    private float rayDistance = 1;
-    [SerializeField]
-    private LayerMask hitLayer;
-
     private IEnumerator Start()
     {
         firstCameraPos = PlayerTrm.transform.Find("FirstCameraPos").GetComponent<Transform>();

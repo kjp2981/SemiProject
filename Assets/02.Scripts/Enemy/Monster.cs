@@ -98,12 +98,13 @@ public class Monster : PoolableMono, IEnemyStateMachine, IHpController, IKnockba
 
     public void Die()
     {
+        isDie = true;
         EnemySpawner.Instance.DeadCount();
+        GoldManager.Instance.AddGold(monsteData.goldAmount);
         animator.SetTrigger(hashDie);
         StopAllCoroutines();
         agent.isStopped = true;
         bodyCollider.enabled = false;
-        isDie = true;
     }
 
     private IEnumerator TargetChangeCoroutine(Transform targetTrm)

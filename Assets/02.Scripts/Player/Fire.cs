@@ -48,6 +48,7 @@ public class Fire : MonoBehaviour
 
         timer = currentGunData.GunData.delay;
         bulletCnt = currentGunData.GunData.bulletCount;
+        UIManager.Instance.SetBulletCountAndImage(bulletCnt, currentGunData.GunData.bulletPrefab.GetComponent<Bullet>().BulletSO.bulletImage);
     }
 
     void Update()
@@ -79,9 +80,11 @@ public class Fire : MonoBehaviour
                 if (isAutoShoot)
                 {
                     bulletCnt--;
+                    UIManager.Instance.SetBulletCountAndImage(bulletCnt);
                     Bullet bullet = PoolManager.Instance.Pop("Bullet") as Bullet;
-                    bullet.transform.SetPositionAndRotation(firePos.position, firePos.rotation);
+                    bullet.SetDamage(currentGunData.GunData.damage);
                     bullet.GetComponent<TrailRenderer>().Clear();
+                    bullet.transform.SetPositionAndRotation(firePos.position, firePos.rotation);
 
                     MuzzleImpact muzzle = PoolManager.Instance.Pop("MuzzleFlash") as MuzzleImpact;
                     muzzle.transform.SetPositionAndRotation(firePos.position, firePos.rotation);
@@ -106,6 +109,7 @@ public class Fire : MonoBehaviour
         UIManager.Instance.SetReloadImageActive(true);
         yield return new WaitForSeconds(currentGunData.GunData.reloadDelay); 
         bulletCnt = currentGunData.GunData.bulletCount;
+        UIManager.Instance.SetBulletCountAndImage(bulletCnt);
         UIManager.Instance.SetReloadImageActive(false);
         isReloading = false;
     }
@@ -121,6 +125,7 @@ public class Fire : MonoBehaviour
         firePos = gunList[GunDataCnt].transform.Find("FirePos");
         animator.runtimeAnimatorController = currentGunData.GunData.animator;
         bulletCnt = currentGunData.GunData.bulletCount;
+        UIManager.Instance.SetBulletCountAndImage(bulletCnt, currentGunData.GunData.bulletPrefab.GetComponent<Bullet>().BulletSO.bulletImage);
     }
 
     void AllClear()

@@ -5,6 +5,7 @@ using UnityEngine;
 public class MuzzleImpact : PoolableMono
 {
     private ParticleSystem particle;
+    private float duration;
 
     private void Awake()
     {
@@ -16,6 +17,7 @@ public class MuzzleImpact : PoolableMono
         if (particle == null)
             particle = GetComponentInChildren<ParticleSystem>();
         particle.Play();
+        StartCoroutine(DestroyCoroutine());
     }
 
     private void OnParticleSystemStopped()
@@ -26,5 +28,11 @@ public class MuzzleImpact : PoolableMono
     public override void Reset()
     {
         
+    }
+
+    IEnumerator DestroyCoroutine()
+    {
+        yield return new WaitForSeconds(1);
+        PoolManager.Instance.Push(this);
     }
 }

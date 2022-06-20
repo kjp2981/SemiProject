@@ -34,7 +34,7 @@ public class EnemySpawner : MonoBehaviour
     public Dictionary<int, List<MonsterPair>> spawnDictionary = new Dictionary<int, List<MonsterPair>>();
 
     private int monsterCnt = 0;
-    private int deadCnt = 1;
+    private int deadCnt = 0;
 
     void Awake()
     {
@@ -80,6 +80,8 @@ public class EnemySpawner : MonoBehaviour
         //    yield return new WaitForSeconds(10);
         //}
 
+        monsterCnt = 0;
+        deadCnt = 0;
         foreach (KeyValuePair<int, List<MonsterPair>> pair in spawnDictionary)
         {
             if (pair.Key == stage)

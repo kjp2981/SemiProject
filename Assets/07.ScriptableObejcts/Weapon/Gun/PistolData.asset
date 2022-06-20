@@ -16,11 +16,11 @@ MonoBehaviour:
   gunImage: {fileID: 21300022, guid: 6674e8c43c63e4f4184cbd009379498d, type: 3}
   gunPrefab: {fileID: 4109770765971529237, guid: 5928cd866a8a45d4aa887e7ccb78dcc3, type: 3}
   delay: 1
-  damage: 3
+  damage: 5
   animator: {fileID: 22100000, guid: 1b667770cee5c5148a1c76552c4cc784, type: 2}
   bulletPrefab: {fileID: 579551700362082489, guid: 2125881bae35ceb4f943f242c2b69792, type: 3}
   isThoungh: 0
   iskonck: 1
   knockbackPower: 5
   bulletCount: 16
-  reloadDelay: 3
+  reloadDelay: 1

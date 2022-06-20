@@ -10,9 +10,11 @@ public class GunInfoSO : ScriptableObject
 
     public GameObject gunPrefab;
     public float delay;
-    public float damage;
+    public int damage;
     public RuntimeAnimatorController animator;
     public GameObject bulletPrefab;
+
+    // --------------추후 구현--------------
 
     public bool isThoungh; // 관통형 총알인지?
     public bool iskonck; // 넉백이 있는지?

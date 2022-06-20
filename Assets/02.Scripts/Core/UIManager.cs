@@ -34,6 +34,14 @@ public class UIManager : MonoBehaviour
     [SerializeField]
     private Image realodImage;
 
+    [SerializeField]
+    private Image BulletImage;
+    [SerializeField]
+    private TextMeshProUGUI bulletCountText;
+
+    [SerializeField]
+    private TextMeshProUGUI goldText;
+
     private void Awake()
     {
         if(instance == null)
@@ -44,16 +52,6 @@ public class UIManager : MonoBehaviour
         {
             Destroy(this.gameObject);
         }
-    }
-
-    void Start()
-    {
-        
-    }
-
-    void Update()
-    {
-        
     }
 
     public void NexusHpbarValue(IHpController hpController)
@@ -76,5 +74,20 @@ public class UIManager : MonoBehaviour
     public void SetReloadImageActive(bool isActive)
     {
         realodImage.gameObject.SetActive(isActive);
+    }
+
+    public void SetBulletCountAndImage(int amount, Sprite sprite = null)
+    {
+        bulletCountText.SetText(string.Format($"X   {amount}"));
+        if (sprite != null)
+        {
+            BulletImage.sprite = sprite;
+            BulletImage.SetNativeSize();
+        }
+    }
+
+    public void SetGoldText(int amount)
+    {
+        goldText.SetText(string.Format($"GOLD : {amount}"));
     }
 }

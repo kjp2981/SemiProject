@@ -9,11 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9a24f5219e4e8f44894ad2368f584d5e, type: 3}
-  m_Name: TurtleData
+  m_Script: {fileID: 11500000, guid: d62d59a91f4d7f94da3eecc72d71a260, type: 3}
+  m_Name: CannonDataSO
   m_EditorClassIdentifier: 
-  speed: 1
-  maxHp: 30
-  attackDamage: 8
-  attackDelay: 3
-  goldAmount: 200
+  damage: 5
+  delay: 5
+  buletPrefab: {fileID: 579551700362082489, guid: 2125881bae35ceb4f943f242c2b69792, type: 3}
+  radius: 20

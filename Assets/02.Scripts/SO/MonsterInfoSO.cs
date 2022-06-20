@@ -11,4 +11,5 @@ public class MonsterInfoSO : ScriptableObject
     public int maxHp;
     public float attackDamage;
     public float attackDelay;
+    public int goldAmount; // 처치시 얻는 골드의 양
 }

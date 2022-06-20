@@ -40,7 +40,7 @@ public class GameManager : MonoBehaviour
 
         CreatePool();
 
-        StartStage();
+        //StartStage();
     }
 
     void CreatePool()
@@ -54,5 +54,10 @@ public class GameManager : MonoBehaviour
     public void StartStage()
     {
         StartCoroutine(EnemySpawner.Instance.SpawnEnemy(1));
+    }
+
+    public void PlayerSpawn()
+    {
+
     }
 }

@@ -12,6 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8655759cde7dd1d40b3b16da2dfe4fbf, type: 3}
   m_Name: CannonBullet
   m_EditorClassIdentifier: 
+  bulletName: CannonBullet
+  bulletImage: {fileID: 21300008, guid: 5163ae49a0de665458bba61cd20c99b1, type: 3}
   speed: 8
   life: 7
   obstacleImpact: {fileID: 100000, guid: 979632a27455af442bd2d8f36eb0ffce, type: 3}

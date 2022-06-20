@@ -40,10 +40,12 @@ public class PlayerController : MonoBehaviour, IHpController, IKnockback
     {
         Move();
 
-        Vector3 pos = MainCam.transform.eulerAngles;
-        pos.y = 0;
-        pos.z = 0;
-        spineTrm.rotation = Quaternion.Euler(pos);
+        //Vector3 pos = MainCam.transform.eulerAngles;
+        //pos.y = 0;
+        //pos.z = 0;
+        //spineTrm.rotation = Quaternion.Euler(pos);
+
+        spineTrm.transform.LookAt(MainCam.transform);
     }
 
     void Move()

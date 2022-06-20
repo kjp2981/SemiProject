@@ -6,8 +6,10 @@ public class Bullet : PoolableMono
 {
     [SerializeField]
     private BulletInfoSO bulletSO;
+    public BulletInfoSO BulletSO { get => bulletSO; }
 
     private TrailRenderer trailRenderer;
+    private int damage = 1;
 
     private void Awake()
     {
@@ -22,6 +24,11 @@ public class Bullet : PoolableMono
     private void Update()
     {
         transform.Translate(Vector3.forward * bulletSO.speed * Time.deltaTime);
+    }
+
+    public void SetDamage(int damage)
+    {
+        this.damage = damage;
     }
 
     private IEnumerator DestroyBulletCoroutine()
@@ -39,7 +46,8 @@ public class Bullet : PoolableMono
             Quaternion rot = Quaternion.LookRotation(collider.GetContact(0).normal);
             impact.transform.SetPositionAndRotation(collider.GetContact(0).point, rot);
 
-            collider.gameObject.GetComponent<Monster>().Damage(1);
+            collider.gameObject.GetComponent<IHpController>().Damage(damage);
+            StopAllCoroutines();
             PoolManager.Instance.Push(this);
             //collider.gameObject.GetComponent<Monster>().Knockback() // 넉백인데 추후 구현
         }
@@ -48,11 +56,12 @@ public class Bullet : PoolableMono
             ObstacleImpact impact = PoolManager.Instance.Pop(bulletSO.obstacleImpact.name) as ObstacleImpact;
             Quaternion rot = Quaternion.LookRotation(-collider.GetContact(0).normal);
             impact.transform.SetPositionAndRotation(collider.GetContact(0).point, rot);
+            StopAllCoroutines();
             PoolManager.Instance.Push(this);
         }
-        
         else
         {
+            StopAllCoroutines();
             PoolManager.Instance.Push(this);
         }
     }
@@ -68,6 +77,7 @@ public class Bullet : PoolableMono
 
     public override void Reset()
     {
+        transform.rotation = Quaternion.Euler(Vector3.zero);
         trailRenderer.Clear();
     }
 }
