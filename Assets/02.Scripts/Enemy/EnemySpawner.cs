@@ -36,6 +36,9 @@ public class EnemySpawner : MonoBehaviour
     private int monsterCnt = 0;
     private int deadCnt = 0;
 
+    private Animator spawnDoorAnimator;
+    private readonly int hashIsOpen = Animator.StringToHash("isOpen");
+
     void Awake()
     {
         if (instance == null)
@@ -46,6 +49,8 @@ public class EnemySpawner : MonoBehaviour
         {
             Destroy(this.gameObject);
         }
+
+        spawnDoorAnimator = SpawnDoor.GetComponent<Animator>();
 
         for (int i = 0; i < spawnData.Length; i++)
         {
@@ -86,7 +91,8 @@ public class EnemySpawner : MonoBehaviour
         {
             if (pair.Key == stage)
             {
-                for(int i = 0; i < pair.Value.Count; i++)
+                spawnDoorAnimator.SetBool(hashIsOpen, true);
+                for (int i = 0; i < pair.Value.Count; i++)
                 {
                     monsterCnt += pair.Value[i].count;
                 }
@@ -97,9 +103,10 @@ public class EnemySpawner : MonoBehaviour
                     {
                         yield return new WaitForSeconds(1);
                         Monster monster = PoolManager.Instance.Pop(pair.Value[i].prefab.name) as Monster;
-                        monster.transform.position = EnemySpawnPos.position;
+                        monster.transform.position = SpawnDoor.transform.localPosition;
                     }
                 }
+                spawnDoorAnimator.SetBool(hashIsOpen, false);
             }
         }
     }

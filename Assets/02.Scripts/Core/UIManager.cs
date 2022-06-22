@@ -41,6 +41,7 @@ public class UIManager : MonoBehaviour
 
     [SerializeField]
     private TextMeshProUGUI goldText;
+    public TextMeshProUGUI GoldText => goldText;
 
     private void Awake()
     {

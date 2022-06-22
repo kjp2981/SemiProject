@@ -55,18 +55,21 @@ public class Fire : MonoBehaviour
     {
         gunChangeTimer += Time.deltaTime;
 
-        float wheelInput = Input.GetAxis("Mouse ScrollWheel");
-        if (gunChangeTimer >= gunChangeDelay)
+        if (isReloading == false)
         {
-            if (wheelInput > 0)
+            float wheelInput = Input.GetAxis("Mouse ScrollWheel");
+            if (gunChangeTimer >= gunChangeDelay)
             {
-                GunDataCnt = (GunDataCnt + 1) % gunList.Count;
-                gunChangeTimer = 0f;
-            }
-            else if (wheelInput < 0)
-            {
-                GunDataCnt = Mathf.Abs(GunDataCnt - 1) % gunList.Count;
-                gunChangeTimer = 0f;
+                if (wheelInput > 0)
+                {
+                    GunDataCnt = (GunDataCnt + 1) % gunList.Count;
+                    gunChangeTimer = 0f;
+                }
+                else if (wheelInput < 0)
+                {
+                    GunDataCnt = Mathf.Abs(GunDataCnt - 1) % gunList.Count;
+                    gunChangeTimer = 0f;
+                }
             }
         }
 

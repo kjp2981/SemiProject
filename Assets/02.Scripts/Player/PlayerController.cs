@@ -113,4 +113,13 @@ public class PlayerController : MonoBehaviour, IHpController, IKnockback
         Vector3 dir = direction * knockbackPower;
         transform.position += dir;
     }
+
+    private void OnAnimatorIK(int layerIndex)
+    {
+        animator.SetIKPosition(AvatarIKGoal.RightHand, MainCam.transform.forward);
+        animator.SetIKPositionWeight(AvatarIKGoal.RightHand, 0.5f);
+        
+        animator.SetIKPosition(AvatarIKGoal.LeftHand, MainCam.transform.forward);
+        animator.SetIKPositionWeight(AvatarIKGoal.LeftHand, 0.5f);
+    }
 }

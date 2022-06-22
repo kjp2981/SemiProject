@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -37,6 +38,8 @@ public class Monster : PoolableMono, IEnemyStateMachine, IHpController, IKnockba
     public EnemyState state { get; set; }
     public int MAX_HP { get; set; }
     public int currentHp { get; set; }
+
+    Sequence seq;
 
     void Start()
     {
@@ -99,12 +102,23 @@ public class Monster : PoolableMono, IEnemyStateMachine, IHpController, IKnockba
     public void Die()
     {
         isDie = true;
+
+        // TODO : Àû Á×´Â ½¦ÀÌ´õ Ãß°¡
+
         EnemySpawner.Instance.DeadCount();
         GoldManager.Instance.AddGold(monsteData.goldAmount);
         animator.SetTrigger(hashDie);
         StopAllCoroutines();
         agent.isStopped = true;
         bodyCollider.enabled = false;
+
+        StartCoroutine(DestroyMonster());
+    }
+
+    IEnumerator DestroyMonster()
+    {
+        yield return new WaitForSeconds(1f);
+        PoolManager.Instance.Push(this);
     }
 
     private IEnumerator TargetChangeCoroutine(Transform targetTrm)
@@ -228,18 +242,15 @@ public class Monster : PoolableMono, IEnemyStateMachine, IHpController, IKnockba
     }
 
 #if UNITY_EDITOR
-    private void OnDrawGizmos()
+    private void OnDrawGizmosSelected()
     {
-        if(UnityEditor.Selection.activeGameObject == this.gameObject)
-        {
-            Gizmos.color = Color.red;
-            Gizmos.DrawWireSphere(transform.position, attackDistance);
-            Gizmos.color = Color.white;
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, attackDistance);
+        Gizmos.color = Color.white;
 
-            Gizmos.color = Color.blue;
-            Gizmos.DrawWireSphere(transform.position, chaseDistance);
-            Gizmos.color = Color.white;
-        }
+        Gizmos.color = Color.blue;
+        Gizmos.DrawWireSphere(transform.position, chaseDistance);
+        Gizmos.color = Color.white;
     }
 #endif
 }

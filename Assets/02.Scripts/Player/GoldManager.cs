@@ -26,8 +26,8 @@ public class GoldManager : MonoBehaviour
         private set
         {
             gold = value;
-            // TODO : UI °»½Å
             UIManager.Instance.SetGoldText(gold);
+            GoldPopupText();
         }
     }
 
@@ -51,5 +51,13 @@ public class GoldManager : MonoBehaviour
     public void SubtractGold(int amount)
     {
         Gold -= amount;
+    }
+
+    private void GoldPopupText()
+    {
+        TextPopup text = PoolManager.Instance.Pop("PopupText") as TextPopup;
+        //text.transform.SetParent(Canvas.transform.position);
+        text.transform.SetPositionAndRotation(UIManager.Instance.GoldText.transform.localPosition, Quaternion.identity);
+        text.Popup($"+ {Gold}", new Color(255, 201, 51));
     }
 }

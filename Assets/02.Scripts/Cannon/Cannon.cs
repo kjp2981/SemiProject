@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 
-public class Cannon : MonoBehaviour
+public class Cannon : PoolableMono
 {
     [SerializeField]
     private CannonDataSO cannonDataSO;
@@ -30,6 +30,11 @@ public class Cannon : MonoBehaviour
 
         checkCoroutine = CheckTarget();
         StartCoroutine(checkCoroutine);
+    }
+
+    private void OnDisable()
+    {
+        StopAllCoroutines();
     }
 
     void Update()
@@ -68,10 +73,11 @@ public class Cannon : MonoBehaviour
     {
         if (targetCol != null)
         {
-            Quaternion rot = Quaternion.LookRotation(targetCol.transform.position);
-            rot.x = 0;
-            rot.z = 0;
-            cannonBarrel.transform.rotation = Quaternion.Lerp(cannonBarrel.transform.rotation, rot, .8f);
+            //Quaternion rot = Quaternion.LookRotation(targetCol.transform.position);
+            //rot.x = 0;
+            //rot.z = 0;
+            //cannonBarrel.transform.rotation = Quaternion.Lerp(cannonBarrel.transform.rotation, rot, .8f);
+            cannonBarrel.LookAt(targetCol.transform);
             if (timer >= cannonDataSO.delay)
             {
                 // TODO : 타겟 바라보기
@@ -83,6 +89,11 @@ public class Cannon : MonoBehaviour
                 timer = 0f;
             }
         }
+    }
+
+    public override void Reset()
+    {
+        
     }
 
 #if UNITY_EDITOR

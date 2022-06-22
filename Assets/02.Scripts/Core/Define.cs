@@ -8,6 +8,7 @@ public class Define
     private static Transform playerTrm = null;
     private static Transform nexusTrm = null;
     private static Transform enemySpawnPos = null;
+    private static GameObject spawnDoor = null;
 
     public static Camera MainCam
     {
@@ -54,6 +55,18 @@ public class Define
                 enemySpawnPos = GameObject.FindWithTag("EnemySpawn").transform.GetComponent<Transform>();
             }
             return enemySpawnPos;
+        }
+    }
+
+    public static GameObject SpawnDoor
+    {
+        get
+        {
+            if(spawnDoor == null)
+            {
+                spawnDoor = GameObject.FindWithTag("Door");
+            }
+            return spawnDoor;
         }
     }
 }
