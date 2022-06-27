@@ -233,7 +233,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8695921513714560820}
-  - component: {fileID: 1128057359}
+  - component: {fileID: 2900782850624626178}
   m_Layer: 0
   m_Name: Cannon
   m_TagString: Untagged
@@ -258,7 +258,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1128057359
+--- !u!114 &2900782850624626178
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

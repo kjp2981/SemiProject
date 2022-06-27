@@ -53,11 +53,6 @@ public class GameManager : MonoBehaviour
 
     public void StartStage()
     {
-        StartCoroutine(EnemySpawner.Instance.SpawnEnemy(1));
-    }
-
-    public void PlayerSpawn()
-    {
-
+        StartCoroutine(EnemySpawner.Instance.SpawnEnemy(Random.Range(0, EnemySpawner.Instance.StageCnt) + 1));
     }
 }

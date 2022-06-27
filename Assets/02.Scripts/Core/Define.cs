@@ -28,7 +28,7 @@ public class Define
         {
             if(playerTrm == null)
             {
-                playerTrm = GameObject.FindWithTag("Player").GetComponent<Transform>();
+                playerTrm = GameObject.FindWithTag("Player").transform;
             }
             return playerTrm;
         }
@@ -40,7 +40,7 @@ public class Define
         {
             if(nexusTrm == null)
             {
-                nexusTrm = GameObject.FindWithTag("Nexus").transform.GetChild(0).GetComponent<Transform>();
+                nexusTrm = GameObject.FindWithTag("Nexus").transform.GetChild(0).transform;
             }
             return nexusTrm;
         }
@@ -52,7 +52,7 @@ public class Define
         {
             if(enemySpawnPos == null)
             {
-                enemySpawnPos = GameObject.FindWithTag("EnemySpawn").transform.GetComponent<Transform>();
+                enemySpawnPos = GameObject.FindWithTag("EnemySpawn").transform;
             }
             return enemySpawnPos;
         }

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: TurtleData
   m_EditorClassIdentifier: 
   speed: 1
-  maxHp: 30
+  maxHp: 15
   attackDamage: 8
   attackDelay: 3
   goldAmount: 200

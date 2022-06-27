@@ -35,6 +35,8 @@ public class Obelisk : MonoBehaviour, IHpController
     public void Die()
     {
         Debug.Log("Obelisk is Destroy");
+
+        SceneMoveManager.Instance.MoveScene("Dead");
         // TODO : 넥서스 파괴 이펙트 넣기
         //          게임 UI 뛰우기
         //          게임 끝내기

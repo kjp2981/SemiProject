@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using static Define;
 
 public class Fire : MonoBehaviour
 {
@@ -87,7 +88,8 @@ public class Fire : MonoBehaviour
                     Bullet bullet = PoolManager.Instance.Pop("Bullet") as Bullet;
                     bullet.SetDamage(currentGunData.GunData.damage);
                     bullet.GetComponent<TrailRenderer>().Clear();
-                    bullet.transform.SetPositionAndRotation(firePos.position, firePos.rotation);
+                    //bullet.transform.SetPositionAndRotation(firePos.position, firePos.rotation);
+                    bullet.transform.SetPositionAndRotation(firePos.position, MainCam.transform.rotation);
 
                     MuzzleImpact muzzle = PoolManager.Instance.Pop("MuzzleFlash") as MuzzleImpact;
                     muzzle.transform.SetPositionAndRotation(firePos.position, firePos.rotation);

@@ -3,9 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
-using static Define;
 
-public class Monster : PoolableMono, IEnemyStateMachine, IHpController, IKnockback
+public class Monster : PoolableMono, IEnemyStateMachine, IHpController
 {
     [SerializeField]
     protected MonsterInfoSO monsteData;
@@ -15,6 +14,8 @@ public class Monster : PoolableMono, IEnemyStateMachine, IHpController, IKnockba
     private Collider bodyCollider;
     [SerializeField]
     private Collider[] hitColliders;
+    private Transform nexus;
+    private Transform player;
 
     protected Transform target;
 
@@ -39,10 +40,11 @@ public class Monster : PoolableMono, IEnemyStateMachine, IHpController, IKnockba
     public int MAX_HP { get; set; }
     public int currentHp { get; set; }
 
-    Sequence seq;
-
     void Start()
     {
+        nexus = GameObject.FindWithTag("Nexus").transform;
+        player = GameObject.FindWithTag("Player").transform;
+
         MAX_HP = monsteData.maxHp;
         currentHp = MAX_HP;
         timer = monsteData.attackDelay;
@@ -53,9 +55,16 @@ public class Monster : PoolableMono, IEnemyStateMachine, IHpController, IKnockba
 
         animator = GetComponent<Animator>();
         ChangeState(EnemyState.Chase);
-        target = NexusTrm;
+        target = nexus;
+
+        agent.isStopped = true;
 
         HitColliderEnable(0);
+    }
+
+    private void OnEnable()
+    {
+        StartCoroutine(StartCoroutine());
     }
 
     void Update()
@@ -70,6 +79,12 @@ public class Monster : PoolableMono, IEnemyStateMachine, IHpController, IKnockba
     {
         CheckState();
         MosnterAction();
+    }
+
+    IEnumerator StartCoroutine()
+    {
+        yield return new WaitForSeconds(1f);
+        agent.isStopped = false;
     }
 
     private void SetRotation()
@@ -88,9 +103,9 @@ public class Monster : PoolableMono, IEnemyStateMachine, IHpController, IKnockba
 
         currentHp -= amount;
 
-        if(target == NexusTrm)
+        if(target == nexus)
         {
-            StartCoroutine(TargetChangeCoroutine(PlayerTrm));
+            StartCoroutine(TargetChangeCoroutine(player));
         }
 
         if(currentHp <= 0)
@@ -102,8 +117,6 @@ public class Monster : PoolableMono, IEnemyStateMachine, IHpController, IKnockba
     public void Die()
     {
         isDie = true;
-
-        // TODO : 적 죽는 쉐이더 추가
 
         EnemySpawner.Instance.DeadCount();
         GoldManager.Instance.AddGold(monsteData.goldAmount);
@@ -136,10 +149,10 @@ public class Monster : PoolableMono, IEnemyStateMachine, IHpController, IKnockba
         if (bodyCollider == null)
             bodyCollider = GetComponent<Collider>();
 
-        target = NexusTrm;
+        target = nexus;
         currentHp = MAX_HP;
         isDie = false;
-        agent.isStopped = false;
+        agent.isStopped = true;
         bodyCollider.enabled = true;
     }
 
@@ -164,7 +177,7 @@ public class Monster : PoolableMono, IEnemyStateMachine, IHpController, IKnockba
         }
         else
         {
-            StartCoroutine(TargetChangeCoroutine(NexusTrm));
+            StartCoroutine(TargetChangeCoroutine(nexus));
             ChangeState(EnemyState.Chase);
         }
     }
@@ -175,7 +188,7 @@ public class Monster : PoolableMono, IEnemyStateMachine, IHpController, IKnockba
 
         switch (state)
         {
-            case EnemyState.Idle: // 약간 의도가 변경된 것 같은 느낌 일단 확실한건 이 게임에 대기 상태는 없다!
+            case EnemyState.Idle:
                 agent.isStopped = false;
                 break;
             case EnemyState.Chase:
@@ -233,12 +246,6 @@ public class Monster : PoolableMono, IEnemyStateMachine, IHpController, IKnockba
             IsDamageChange(1);
             other.transform.parent.SendMessage("Damage", monsteData.attackDamage, SendMessageOptions.DontRequireReceiver);
         }
-    }
-
-    public void Knockback(float knockbackPower, Vector3 direction)
-    {
-        Vector3 dir = direction * knockbackPower;
-        transform.position += dir;
     }
 
 #if UNITY_EDITOR

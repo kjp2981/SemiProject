@@ -11,7 +11,7 @@ public class Bullet : PoolableMono
     private TrailRenderer trailRenderer;
     private int damage = 1;
 
-    private void Awake()
+    protected virtual void Awake()
     {
         trailRenderer = GetComponent<TrailRenderer>();
     }
@@ -21,7 +21,7 @@ public class Bullet : PoolableMono
         StartCoroutine(DestroyBulletCoroutine());
     }
 
-    private void Update()
+    protected virtual void Update()
     {
         transform.Translate(Vector3.forward * bulletSO.speed * Time.deltaTime);
     }
@@ -48,8 +48,9 @@ public class Bullet : PoolableMono
 
             collider.gameObject.GetComponent<IHpController>().Damage(damage);
             StopAllCoroutines();
+            trailRenderer.Clear();
+            trailRenderer.enabled = false;
             PoolManager.Instance.Push(this);
-            //collider.gameObject.GetComponent<Monster>().Knockback() // 넉백인데 추후 구현
         }
         else if (collider.gameObject.layer == LayerMask.NameToLayer("OBSTACLE"))
         {
@@ -57,12 +58,20 @@ public class Bullet : PoolableMono
             Quaternion rot = Quaternion.LookRotation(-collider.GetContact(0).normal);
             impact.transform.SetPositionAndRotation(collider.GetContact(0).point, rot);
             StopAllCoroutines();
+            trailRenderer.Clear();
+            trailRenderer.enabled = false;
             PoolManager.Instance.Push(this);
         }
         else
         {
-            StopAllCoroutines();
-            PoolManager.Instance.Push(this);
+            if (collider.collider.CompareTag("Cannon") == false)
+            {
+                StopAllCoroutines();
+                trailRenderer.Clear();
+                trailRenderer.enabled = false;
+                Debug.Log($"{collider.gameObject.name}"); 
+                PoolManager.Instance.Push(this);
+            }
         }
     }
 
@@ -71,6 +80,8 @@ public class Bullet : PoolableMono
         if (other.gameObject.layer == LayerMask.NameToLayer("HANDLE"))
         {
             other.GetComponent<Handle>().HandleAnim();
+            trailRenderer.Clear();
+            trailRenderer.enabled = false;
             PoolManager.Instance.Push(this);
         }
     }
@@ -79,5 +90,6 @@ public class Bullet : PoolableMono
     {
         transform.rotation = Quaternion.Euler(Vector3.zero);
         trailRenderer.Clear();
+        trailRenderer.enabled = true;
     }
 }

@@ -42,6 +42,8 @@ public class UIManager : MonoBehaviour
     [SerializeField]
     private TextMeshProUGUI goldText;
     public TextMeshProUGUI GoldText => goldText;
+    [SerializeField]
+    private TextMeshProUGUI cannonText;
 
     private void Awake()
     {
@@ -90,5 +92,10 @@ public class UIManager : MonoBehaviour
     public void SetGoldText(int amount)
     {
         goldText.SetText(string.Format($"GOLD : {amount}"));
+    }
+
+    public void SetCannonTextActive(bool value)
+    {
+        cannonText.gameObject.SetActive(value);
     }
 }

@@ -17,6 +17,7 @@ public class PlayerController : MonoBehaviour, IHpController, IKnockback
     private Transform spineTrm;
 
     private float yVelocity;
+    private float zOffset = -13.881f;
 
     private bool isJump = false;
 
@@ -40,13 +41,20 @@ public class PlayerController : MonoBehaviour, IHpController, IKnockback
     {
         Move();
 
-        //Vector3 pos = MainCam.transform.eulerAngles;
-        //pos.y = 0;
-        //pos.z = 0;
-        //spineTrm.rotation = Quaternion.Euler(pos);
 
-        spineTrm.transform.LookAt(MainCam.transform);
     }
+
+    //void LateUpdate()
+    //{
+    //    Quaternion rot = MainCam.transform.rotation;
+    //    rot.y = 0;
+    //    rot.x = 0;
+    //    rot.z *= -1;
+    //    //rot.z += zOffset;
+    //    spineTrm.localRotation = rot;
+
+    //    //spineTrm.transform.LookAt(MainCam.transform.forward);
+    //}
 
     void Move()
     {
@@ -114,12 +122,18 @@ public class PlayerController : MonoBehaviour, IHpController, IKnockback
         transform.position += dir;
     }
 
-    private void OnAnimatorIK(int layerIndex)
-    {
-        animator.SetIKPosition(AvatarIKGoal.RightHand, MainCam.transform.forward);
-        animator.SetIKPositionWeight(AvatarIKGoal.RightHand, 0.5f);
-        
-        animator.SetIKPosition(AvatarIKGoal.LeftHand, MainCam.transform.forward);
-        animator.SetIKPositionWeight(AvatarIKGoal.LeftHand, 0.5f);
-    }
+    //private void OnAnimatorIK(int layerIndex)
+    //{
+    //    animator.SetIKPosition(AvatarIKGoal.RightHand, crossHair.transform.position);
+    //    animator.SetIKPositionWeight(AvatarIKGoal.RightHand, 0.5f);
+
+    //    animator.SetIKPosition(AvatarIKGoal.LeftHand, crossHair.transform.position);
+    //    animator.SetIKPositionWeight(AvatarIKGoal.LeftHand, 0.5f);
+
+    //    animator.SetIKRotation(AvatarIKGoal.RightHand, crossHair.transform.rotation);
+    //    animator.SetIKRotationWeight(AvatarIKGoal.RightHand, 0.5f);
+
+    //    animator.SetIKRotation(AvatarIKGoal.LeftHand, crossHair.transform.rotation);
+    //    animator.SetIKRotationWeight(AvatarIKGoal.LeftHand, 0.5f);
+    //}
 }

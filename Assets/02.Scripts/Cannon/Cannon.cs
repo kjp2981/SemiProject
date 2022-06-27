@@ -73,16 +73,10 @@ public class Cannon : PoolableMono
     {
         if (targetCol != null)
         {
-            //Quaternion rot = Quaternion.LookRotation(targetCol.transform.position);
-            //rot.x = 0;
-            //rot.z = 0;
-            //cannonBarrel.transform.rotation = Quaternion.Lerp(cannonBarrel.transform.rotation, rot, .8f);
             cannonBarrel.LookAt(targetCol.transform);
             if (timer >= cannonDataSO.delay)
             {
-                // TODO : ≈∏∞Ÿ πŸ∂Û∫∏±‚
-                //transform.LookAt(targetCol?.transform);
-                // TODO : ≈∏ƒœ¿ª «‚«ÿ √— ΩÓ±‚
+                Debug.Log($"Attack, {targetCol}");
                 Bullet bullet = PoolManager.Instance.Pop("CannonBullet") as Bullet;
                 bullet.SetDamage(cannonDataSO.damage);
                 bullet.transform.SetPositionAndRotation(firePos.position, firePos.rotation);

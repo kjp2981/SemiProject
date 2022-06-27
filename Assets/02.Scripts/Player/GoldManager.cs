@@ -27,7 +27,7 @@ public class GoldManager : MonoBehaviour
         {
             gold = value;
             UIManager.Instance.SetGoldText(gold);
-            GoldPopupText();
+            //GoldPopupText();
         }
     }
 
@@ -41,6 +41,8 @@ public class GoldManager : MonoBehaviour
         {
             Destroy(this.gameObject);
         }
+
+        Gold = 500;
     }
 
     public void AddGold(int amount)

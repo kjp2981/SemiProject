@@ -23,6 +23,8 @@ public class EnemySpawner : MonoBehaviour
 
     [SerializeField]
     private MonsterSpawnSO[] spawnData;
+    [SerializeField]
+    private Transform spawnPos;
 
     private int stageCnt = 1;
 
@@ -65,26 +67,6 @@ public class EnemySpawner : MonoBehaviour
 
     public IEnumerator SpawnEnemy(int stage)
     {
-        //for (int idx = 1; idx <= spawnData.Length; idx++)
-        //{
-        //    foreach (KeyValuePair<int, List<MonsterPair>> pair in spawnDictionary)
-        //    {
-        //        for (int i = 0; i < pair.Value.Count; i++)
-        //        {
-        //            monsterCnt += pair.Value[i].count;
-        //            yield return new WaitForSeconds(2f);
-        //            for (int j = 0; j < pair.Value[i].count; j++)
-        //            {
-        //                yield return new WaitForSeconds(1);
-        //                Monster monster = PoolManager.Instance.Pop(pair.Value[i].prefab.name) as Monster;
-        //                //monster.transform.position = EnemySpawnPos.position;
-        //                monster.transform.position = EnemySpawnPos.localPosition;
-        //            }
-        //        }
-        //    }
-        //    yield return new WaitForSeconds(10);
-        //}
-
         monsterCnt = 0;
         deadCnt = 0;
         foreach (KeyValuePair<int, List<MonsterPair>> pair in spawnDictionary)
@@ -103,7 +85,7 @@ public class EnemySpawner : MonoBehaviour
                     {
                         yield return new WaitForSeconds(1);
                         Monster monster = PoolManager.Instance.Pop(pair.Value[i].prefab.name) as Monster;
-                        monster.transform.position = SpawnDoor.transform.localPosition;
+                        monster.gameObject.transform.position = spawnPos.position;
                     }
                 }
                 spawnDoorAnimator.SetBool(hashIsOpen, false);

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d62d59a91f4d7f94da3eecc72d71a260, type: 3}
   m_Name: CannonDataSO
   m_EditorClassIdentifier: 
-  damage: 5
-  delay: 5
-  buletPrefab: {fileID: 579551700362082489, guid: 2125881bae35ceb4f943f242c2b69792, type: 3}
+  damage: 10
+  delay: 3
+  buletPrefab: {fileID: 7778337829404521227, guid: 89b57dc4e89a91246880b445bfc857f9, type: 3}
   radius: 20
